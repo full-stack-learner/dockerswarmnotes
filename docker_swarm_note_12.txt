@@ -1,0 +1,61 @@
+
+Node Availability
+
+Active - run existing tasks, available for new tasks
+Pause - run existing tasks, not available for new tasks (good for troubleshooting)
+Drain - reschedule existing tasks, not available for new tasks (good for maintainance)
+
+> docker node ls
+> docker service create --name webapp1 --replicas 4 nginx
+> docker node update --availability=pause node2
+
+Resource Requirements
+
+Max given to container
+
+--limit-cpu .5
+--limit-memory 256M
+
+Minimum free needed to schedule container
+
+--reserve-cpu .5
+--reserve-memory
+
+Example
+
+> docker service create --reserve-memory 800M --reserve-cpu 1 mysql
+
+> docker service create --limit-memory 150M --limit-cpu .25 nginx
+
+Remove them with update to 0
+
+> docker service update --limit-memory 0 --limit-cpu 0 myservice
+
+> docker service create --replicas 4 --reserve-memory 300M --name 300 nginx
+
+> docker service update --reserve-memory 0 [service_name]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

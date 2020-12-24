@@ -1,0 +1,13 @@
+
+Use overlay network in same node
+
+> docker network ls
+> docker network create --driver overlay mydrupal
+> docker network ls
+
+> docker service create --name psql --network mydrupal -e POSTGRES_PASSWORD=mypass postgres
+> docker service ls
+> docker service ps psql
+> docker container logs [service_name]
+
+> docker service create --name drupal --network mydrupal -p 80:80 drupal

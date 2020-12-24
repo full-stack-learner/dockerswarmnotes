@@ -1,0 +1,21 @@
+
+Docker Stack
+
+> docker stack deploy -c [file_name].yml [name]
+
+> docker stack ls
+
+NAME        SERVICES   ORCHESTRATOR
+votingapp   6          Swarm
+
+> docker stack ps [name]
+
+> docker stack services [name]
+
+ID             NAME                   MODE         REPLICAS   IMAGE                                       PORTS
+sapq8tm40e47   votingapp_db           replicated   1/1        postgres:9.4                                
+qlkq82eiz31m   votingapp_redis        replicated   1/1        redis:alpine                                *:30000->6379/tcp
+nlq95cenpbhw   votingapp_result       replicated   1/1        bretfisher/examplevotingapp_result:latest   *:5001->80/tcp
+aj0lcgaydu9f   votingapp_visualizer   replicated   1/1        dockersamples/visualizer:latest             *:8080->8080/tcp
+yg8yh18i5na8   votingapp_vote         replicated   2/2        bretfisher/examplevotingapp_vote:latest     *:5000->80/tcp
+pfq784o9h312   votingapp_worker       replicated   1/1        bretfisher/examplevotingapp_worker:java

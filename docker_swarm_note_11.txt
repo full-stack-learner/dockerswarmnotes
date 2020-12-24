@@ -1,0 +1,23 @@
+
+Docker Mode
+
+> docker service create --mode=global --name test1 nginx
+
+> docker service create --mode=global --name test1 --constraint=node.role==worker nginx
+
+Docker Placement Preference
+
+> docker node update --label-add azone=1 node1 <- available zone 1
+> docker node update --label-add azone=2 node2 <- available zone 2
+> docker node update --label-add azone=2 node3 <- available zone 2 *
+
+> docker service create --placement-pref=spread=node.labels.azone --replicas=2 --name webapp1 nginx
+> docker service create --placement-pref=spread=node.labels.azone --replicas=2 --name webapp2 nginx
+
+Remove placement preference from webapp 1 and remaind placement preference from webapp 2
+
+> docker service update --placement-pref-rm spread=node.labels.azone webapp1
+
+> docker service scale webapp2=8
+
+

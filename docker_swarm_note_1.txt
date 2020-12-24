@@ -1,0 +1,37 @@
+
+
+> docker service create --name hello --replicas 3 --detach=false --publish 8080:80 nginx
+
+"see docker info"
+
+> docker info
+
+"initiate docker swarm"
+
+> docker init
+
+"list out docker ndoes"
+
+> docker node ls
+
+> docker service --help
+> docker service create alpine ping 8.8.8.8
+> docker service ls
+> docker service ps [sevice_name]
+> docker container ls
+
+"update sevice to run with 3 replicas"
+
+> docker service update [service_id] --replicas 3
+> docker service ls
+> docker service ps [service_name]
+> docker container ls
+> docker service update --help
+> docker container rm -f [container_name]
+> docker service ls
+
+"wait a bit and type again"
+
+> docker service ls
+> docker service ps [service_name]
+

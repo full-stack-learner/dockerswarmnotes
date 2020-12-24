@@ -1,0 +1,42 @@
+
+Container health states
+- Healthcheck was added in 1.12
+- starting, healthy, unhealthy
+- 0 (OK), 1 (Error)
+
+FROM nginx:1.13
+
+HEALTHCHECK --interval=30s --timeout=3s \
+ CMD curl -f http://localhost/ || exit 1
+
+
+FROM postgres
+
+HEALTHCHECK --interval=5s --timeout=3s \
+ CMD pg_isready -U postgres || exit 1
+
+
+Exercise
+
+version: "2.1" # minimum for healthchecks
+services:
+	web:
+		image: nginx
+		healthcheck:
+			test: ["CMD", "curl", "-f", "http://localhost"]
+			interval: 1m30s
+			timeout: 10s
+			retries: 3
+			start_period: 1m # version 3.4 minimum
+
+> docker container run --name p1 -d postgres
+> docker container ls
+> docker container run --name p2 -d --health-cmd="pg_isready -U postgres || exit 1" postgres
+
+Create service with health check command
+
+> docker service create --name p2 --health-cmd="pg_isready -U postgres || exist 1" postgres
+
+
+
+

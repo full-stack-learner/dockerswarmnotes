@@ -1,0 +1,23 @@
+
+Docker secret
+
+> cat psql_user.txt
+mypsqluser
+
+> docker secret ls
+> docker secret create psql_user psql_user.txt
+> echo "myDBpassWORD" | docker secret create psql_pass -
+
+> docker secret inspect psql_user
+
+> docker service create --name psql --secret psql_user --secret psql_pass -e POSTGRES_PASS		WORD_FILE=/run/secrets/psql_pass -e POSTGRES_USER_FILE=/run/secrets/psql_user postgres
+
+> docker service ps psql
+
+> docker exec -it [container_name] bash
+
+# ls /run/secrets/
+# cat /run/secrets/psql_user
+mypsqluser
+
+> docker service update --secret-rm

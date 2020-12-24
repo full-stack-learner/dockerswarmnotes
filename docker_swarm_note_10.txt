@@ -1,0 +1,36 @@
+
+Service Constraints
+
+> docker service create --constraint=node.role==manager nginx
+
+> docker service create --constraint=node.role!=worker nginx
+
+> docker service create --name app1 --constraint node.role==worker nginx
+
+> docker service update --constraint-rm node.role==worker --constraint-add node.role==manager app1
+
+After typing above command, app1 will move to manager node :)
+
+Let add label to node2
+
+> docker node update --label-add dmz=true node2
+
+> docker service create --name dmz-nginx --constraint node.labels.dmz==true --replicas 2 nginx
+
+Remove label in node
+
+> docker node update --label-rm dmz node2
+> docker node update --label-rm [label_name] [node_name]
+
+Service Constraints Build-in Labels
+
+node.id
+node.hostname
+node.ip
+node.role
+node.platform.os (linux|win|etc)
+node.platform.arch (x86_64|arm64|386|etc)
+node.labels (empty by default)
+
+
+

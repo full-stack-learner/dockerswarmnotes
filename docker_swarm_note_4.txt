@@ -1,0 +1,6 @@
+
+Stateless load balancer not like nginx
+
+> docker service create --name search --replicas 3 -p 9200:9200 elasticsearch:2
+> docker service ps search
+> curl localhost:9200

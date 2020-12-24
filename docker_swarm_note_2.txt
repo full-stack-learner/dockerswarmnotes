@@ -1,0 +1,49 @@
+
+Enter the following command in manager node
+
+> docker swarm init --advertise-addr [ip_address]
+
+Copy the following command in the node, you want to give a join
+
+> docker swarm join --token SWMTKN-1-4pbjxo8kuh1uczgpc7dxdc8f2ckxu41lemjcwj9p8m127xvsd4-db7g06rt1hohsdcx9q495ne2g 167.71.229.200:2377
+
+List out docker nodes
+
+> docker node ls
+
+Promote node role
+
+> docker node update --role manager [node_name]
+
+Promote node role
+
+> docker swarm join-token manager
+
+List out docker nodes
+
+> docker node ls
+
+Remove node by using it id
+
+> docker node rm [node_id]
+
+Create service with 3 replicas
+
+> docker service create --replicas 3 alpine ping 8.8.8.8
+> docker service ls
+
+> docker node ps
+> docker node ps [node_name]
+
+> docker service ps [service_name]
+
+Creat Visualizer on manager node
+
+> docker run -it -d -p 8080:8080 -v /var/run/docker.sock:/var/run/docker.sock dockersamples/visualizer
+
+
+
+
+
+
+

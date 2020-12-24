@@ -1,0 +1,44 @@
+
+Service scale and rollback
+
+> docker service scale web=4
+> docker service rollback web
+
+> docker serivce update --image myapp:1.2.1 [service_name]
+
+> docker service update --en-add NODE_ENV=production --publish-rm 8080
+
+> docker service scale web=8 api=6
+
+Swarm update in stack file
+
+Just edit the yml file and then
+
+> docker stack deploy -c [file_name].yml [stack_name]
+
+Exercise
+
+> docker service create -p 8080:80 --name web nginx:1.13.7
+
+Update scaling
+
+> docker service scale web=5
+
+Update image
+
+> docker service update --image nginx:1.13.6 web
+
+Update port
+
+> docker service update --publish-rm 8080 --publish-add 9090:80 web
+
+> docker service rm web
+
+
+
+
+
+
+
+
+

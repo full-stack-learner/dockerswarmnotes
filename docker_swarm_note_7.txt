@@ -1,0 +1,7 @@
+
+Docker compose
+
+> docker-compose up
+> docker-compose -f [file_name].yml -f [file_name].prod.yml up -d
+> docker-compose -f [file_name].yml -f [file_name].prod.yml config
+> docker-compose -f [file_name].yml -f [file_name].prod.yml config > output.yml
