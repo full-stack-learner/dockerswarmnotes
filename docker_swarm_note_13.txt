@@ -1,0 +1,81 @@
+
+Operating docker swarm in production
+
+> docker service logs [service_name]
+
+> docker service logs [task_id]
+
+> docker service logs --raw --no-trunc [service_name]
+
+> docker service logs --tail 5 --follow [service_name]
+
+> docker stack deploy -c [file_name].yml [stack_name]
+
+> watch docker stack services [stack_name]
+> docker stack services [stack_name]
+
+> docker ps
+
+> docker service log [service_name] 2>&1 | grep [log_id]
+
+Docker events
+
+> docker events
+> docker events --since 2017-12-01
+> docker events --since 30m
+> docker events --since 1h --filter event=start --filter scope=swarm --filter type=network
+
+> docker service scale viz=0
+
+> docker stack deploy -c [file_name].yml [stack_name]
+
+Docker config
+
+Create a new config from a nginx config
+
+> docker config ls
+> docker config create nginx01 ./nginx.conf
+> docker config ls
+
+Create a service with config
+
+> docker service create --config source=nginx01,target=/etc/nginx/conf.d/default.conf
+> docker config ls
+
+Create new config to replace old
+
+> docker config create nginx02 ./nginx.conf
+
+Update service with new config
+
+> docker service update --config-rm nginx01 --config-add source=nginx02,target=/etc/nginx/conf.d/default.conf
+
+> docker config ls
+> docker service create --config source=[config_name],target=/etc/nginx/conf.d/default.conf -p 9000:80 --network [network_name] --name [service_name] nginx
+
+> docker config inspect [config_name]
+> docker config rm [config_name]
+
+> docker service inspect proxy
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
