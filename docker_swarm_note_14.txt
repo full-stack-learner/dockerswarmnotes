@@ -1,0 +1,95 @@
+
+Health Check in Docker
+
+Type the following in node1 terminal1
+
+> docker network create --driver overlay --attachable [network_name]
+
+> docker service create --name firefly -p 80:80 --network verse --replicas 5 --constraint "node.hostname=node1" --env DELAY_STARTUP=500 bretfisher/browncoat:v1
+
+> docker service update --image bretfisher/browncoat:v2 firefly
+
+Type the following in node1 terminal2
+
+> docker events -f service=firefly
+
+Type the following in node1 terminal3
+
+> docker run --rm --network 1 bretfisher/httping -i .1 -GsY firefly/healthz
+
+Making assignment
+
+Go https://github.com/docker-library/healthcheck
+
+> docker run -d --name es2 elasticsearch:2
+> docker exec -it es2 bash
+# curl http://localhost:9200/_cat/health?h=status
+
+Output will come out "green"
+
+> echo $?
+
+Docker Service Rollback
+
+> docker service create --name firefly -p 80:80 --network verse --replicas 5 --constraint "node.hostname=node1" --env DELAY_STARTUP=500 bretfisher/browncoat:v1
+
+> docker service update --image bretfisher/browncoat:v3.healthcheck firefly
+
+> docker service ps [service_name]
+> docker service rollback [service_name]
+
+> docker service update --image bretfisher/browncoat:v3.healthcheck --update-failure-action rollback firefly
+
+> watch docker stack ps [stack_name]
+
+Writing health check in yml file
+
+version: '3'
+services:
+	redis:
+		image: redis
+		healthcheck:
+			test: ["CMD", "redis-healthcheck"]
+			interval: 5s
+			timeout: 5s
+			retries: 3
+			start_period: 60s
+		deploy:
+			replicas: 1
+			update_config:
+				failure_action: rollback
+		configs:
+			- source: redis-healthcheck
+			  target: /usr/local/bin/redis-healthcheck
+			  mode: 0555
+		network:
+			- frontend
+configs:
+	redis-healthcheck:
+		file: ./redis-healthcheck
+	postgres-healthcheck:
+		file: ./postgres-healthcheck
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
